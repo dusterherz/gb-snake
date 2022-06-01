@@ -7,7 +7,7 @@ LCC = lcc
 
 # You can set flags for LCC here
 # For example, you can uncomment the line below to turn on debug output
-sLCCFLAGS = -debug
+LCCFLAGS = -debug -I$(IDIR)
 
 # You can set the name of the .gb ROM file here
 PROJECTNAME    = Snake
@@ -15,6 +15,7 @@ PROJECTNAME    = Snake
 SRCDIR      = src
 OBJDIR      = obj
 RESDIR      = res
+IDIR		= include
 BINS	    = $(PROJECTNAME).gb
 CSOURCES    = $(foreach dir,$(SRCDIR),$(notdir $(wildcard $(dir)/*.c))) $(foreach dir,$(RESDIR),$(notdir $(wildcard $(dir)/*.c)))
 ASMSOURCES  = $(foreach dir,$(SRCDIR),$(notdir $(wildcard $(dir)/*.s)))

@@ -11,3 +11,5 @@ Snake.cdb
 Snake.gb
 
 obj/
+
+*.log
