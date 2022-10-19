@@ -1,0 +1,19 @@
+{
+    "configurations": [
+        {
+            "name": "Linux",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "/home/dusterherz/tools/gbdk/include/**",
+                "/home/dusterherz/tools/gbdk/include"
+            ],
+            "defines": [],
+            "compilerPath": "/home/dusterherz/tools/gbdk/bin/lcc",
+            "cStandard": "c17",
+            "cppStandard": "c++14",
+            "intelliSenseMode": "linux-clang-x64",
+            "configurationProvider": "ms-vscode.makefile-tools"
+        }
+    ],
+    "version": 4
+}
