@@ -1,0 +1,17 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "../../../home/dusterherz/tools/gbdk/examples/gb"
+		}
+	],
+	"settings": {
+		"files.associations": {
+			"snake.h": "c",
+			"stdio.h": "c",
+			"console.h": "c"
+		}
+	}
+}

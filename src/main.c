@@ -4,9 +4,6 @@
 
 #include "snake.h"
 
-uint8_t snake_x, snake_y = 0;
-uint8_t dir = RIGHT;
-
 uint8_t sprite_data[] = {
     0x3C, 0x3C, 0x42, 0x7E, 0x99, 0xFF, 0xA9, 0xFF, 0x89, 0xFF, 0x89,
     0xFF, 0x42, 0x7E, 0x3C, 0x3C, 0x3C, 0x3C, 0x42, 0x7E, 0xB9, 0xFF,
@@ -15,8 +12,12 @@ uint8_t sprite_data[] = {
     0x5A, 0x7E, 0x3C, 0x3C, 0x3C, 0x3C, 0x42, 0x7E, 0xA9, 0xFF, 0xA9,
     0xFF, 0xB9, 0xFF, 0x89, 0xFF, 0x42, 0x7E, 0x3C, 0x3C};
 
-struct SnakeBody snake_body[] = {{4, 2, RIGHT}, {3, 2, RIGHT}, {2, 2, RIGHT}};
-uint8_t snake_size = 3;
+SnakeBody snake_body[SNAKE_SIZE] = {
+    {4, 2, RIGHT},
+    {3, 2, RIGHT},
+    {2, 2, RIGHT},
+};
+joypads_t joypads;
 
 void init_snake() {
   // init palettes
@@ -32,38 +33,50 @@ void init_snake() {
   // init display
   SHOW_BKG;
   SHOW_SPRITES;
+  // init controls
+  joypad_init(1, &joypads);
 }
 
 void move_snake() {
-  for (uint8_t i = 0; i < snake_size; i++) {
-    switch (snake_body[i].dir) {
-      case RIGHT:
-        snake_body[i].x++;
-        break;
-      case LEFT:
-        snake_body[i].x--;
-        break;
-      case UP:
-        snake_body[i].y--;
-        break;
-      case DOWN:
-        snake_body[i].y++;
-        break;
+  if (joypads.joy0 & J_UP)
+    snake_body[0].dir = UP;
+  else if (joypads.joy0 & J_DOWN)
+    snake_body[0].dir = DOWN;
+  else if (joypads.joy0 & J_LEFT)
+    snake_body[0].dir = LEFT;
+  else if (joypads.joy0 & J_RIGHT)
+    snake_body[0].dir = RIGHT;
+  uint8_t i = SNAKE_SIZE;
+  while (1) {
+    i--;
+    if (snake_body[i].dir == RIGHT) {
+      snake_body[i].x++;
+    } else if (snake_body[i].dir == LEFT) {
+      snake_body[i].x--;
+    } else if (snake_body[i].dir == UP) {
+      snake_body[i].y--;
+    } else if (snake_body[i].dir == DOWN) {
+      snake_body[i].y++;
     }
-    /* This code is not working
-     All the dir values will be the same at the end, not changing one by one
-     if (i > 0) {
-       snake_body[i].dir = snake_body[i - 1].dir;
-     }*/
     move_sprite(i, snake_body[i].x * 8, snake_body[i].y * 8);
+    if (i > 0) {
+      snake_body[i].dir = snake_body[i - 1].dir;
+    } else {
+      break;
+    }
   }
 }
 
 int main() {
   init_snake();
   while (1) {
+    joypad_ex(&joypads);
     // Do something
     move_snake();
+    wait_vbl_done();
+    wait_vbl_done();
+    wait_vbl_done();
+    wait_vbl_done();
     wait_vbl_done();
   }
 }

@@ -3,11 +3,15 @@
 # subdirectories and places the output in a "obj" subdirectory
 #
 
-LCC = lcc
+# If you move this project you can change the directory 
+# to match your GBDK root directory (ex: GBDK_HOME = "C:/GBDK/"
+GBDK_HOME = /home/dusterherz/tools/gbdk/
+
+LCC = lcc 
 
 # You can set flags for LCC here
 # For example, you can uncomment the line below to turn on debug output
-sLCCFLAGS = -debug
+LCCFLAGS = -debug -Wa-l -Wl-m -Wm-ys
 
 # You can set the name of the .gb ROM file here
 PROJECTNAME    = Snake
@@ -15,7 +19,7 @@ PROJECTNAME    = Snake
 SRCDIR      = src
 OBJDIR      = obj
 RESDIR      = res
-BINS	    = $(PROJECTNAME).gb
+BINS	    = $(OBJDIR)/$(PROJECTNAME).gb
 CSOURCES    = $(foreach dir,$(SRCDIR),$(notdir $(wildcard $(dir)/*.c))) $(foreach dir,$(RESDIR),$(notdir $(wildcard $(dir)/*.c)))
 ASMSOURCES  = $(foreach dir,$(SRCDIR),$(notdir $(wildcard $(dir)/*.s)))
 OBJS       = $(CSOURCES:%.c=$(OBJDIR)/%.o) $(ASMSOURCES:%.s=$(OBJDIR)/%.o)
